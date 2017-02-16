@@ -1,0 +1,64 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+extern int yylex();
+extern int yyerror(char*);
+
+
+%}
+%union {
+    int i;
+}
+%left I V Af Sk Se If Th El Wh Do Pl Mo Mu
+
+%start prog
+
+
+%%
+/* Un programme est une suite de déclaration (C) composé de déclaration atomique (C0)  */
+prog: C
+    ;
+
+E: E Pl T
+ | E Mo T
+ | T
+ ;
+
+T: T Mu F
+ | F
+ ;
+
+F: '(' E ')'
+ | I
+ | V
+ ;
+
+C0: V Af E
+ | Sk
+ | '(' C0 ')'
+ | If E Th C El C0
+ | Wh E Do C0
+ ;
+
+C: C Se C0
+ | C0
+ ;
+
+
+%%
+
+
+int yyerror(char *s) {
+    fprintf(stderr, "*** ERRROR: %s\n",s);
+    return 0;
+}
+
+int yywrap() {
+    return -1;
+}
+
+int main(int argn, char **argv) {
+    return yyparse();
+}
