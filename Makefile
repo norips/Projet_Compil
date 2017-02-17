@@ -7,7 +7,7 @@ all: $(PROGS)
 
 
 imp.tab.c imp.tab.h: imp.y
-	bison --file-prefix=imp -d imp.y
+	bison -t --file-prefix=imp -d imp.y
 
 imp.yy.c: imp.l imp.tab.h
 	flex -o $@ $< 

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#define YYDEBUG 1
 extern int yylex();
 extern int yyerror(char*);
 
@@ -10,9 +10,11 @@ extern int yyerror(char*);
 %}
 %union {
     int i;
+    char* id;
 }
 %left I V Af Sk Se If Th El Wh Do Pl Mo Mu
-
+%type<id> V
+%type<i> I
 %start prog
 
 
@@ -32,7 +34,7 @@ T: T Mu F
 
 F: '(' E ')'
  | I
- | V
+ | V			{printf("V=%s\n",$1);}
  ;
 
 C0: V Af E
@@ -60,5 +62,6 @@ int yywrap() {
 }
 
 int main(int argn, char **argv) {
+    yydebug = 1;
     return yyparse();
 }
