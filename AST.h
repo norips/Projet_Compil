@@ -1,4 +1,4 @@
-extern void yyerror(char *s);
+extern int yyerror(char *s);
 typedef enum { typeCon, typeId, typeOpr } nodeEnum;
 
 /* constants */
@@ -8,7 +8,7 @@ typedef struct {
 
 /* identifiers */
 typedef struct {
-    int i;                      /* subscript to sym array */
+    char *id ;                      /* subscript to sym array */
 } idNodeType;
 
 /* operators */
@@ -31,7 +31,7 @@ typedef struct nodeTypeTag {
 extern char* sym[100];
 
 nodeType *opr(int oper, int nops, ...);
-nodeType *id(int i);
+nodeType *id(char *id);
 nodeType *con(int value);
 void freeNode(nodeType *p);
 

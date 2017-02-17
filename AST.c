@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 #include "AST.h"
 
 nodeType *con(int value) {
@@ -17,7 +18,7 @@ nodeType *con(int value) {
     return p;
 }
 
-nodeType *id(int i) {
+nodeType *id(char *id) {
     nodeType *p;
 
     /* allocate node */
@@ -26,7 +27,7 @@ nodeType *id(int i) {
 
     /* copy information */
     p->type = typeId;
-    p->id.i = i;
+    p->id.id = strdup(id);
 
     return p;
 }
