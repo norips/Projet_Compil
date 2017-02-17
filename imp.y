@@ -34,11 +34,12 @@ T: T Mu F
 
 F: '(' E ')'
  | I
- | V			{printf("V=%s\n",$1);}
+ | V
  ;
 
 C0: V Af E
  | Sk
+ | Se
  | '(' C0 ')'
  | If E Th C El C0
  | Wh E Do C0
@@ -46,6 +47,7 @@ C0: V Af E
 
 C: C Se C0
  | C0
+ | '(' C ')'
  ;
 
 
