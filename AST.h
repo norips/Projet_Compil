@@ -1,3 +1,5 @@
+#ifndef AST_H
+#define AST_H 
 extern int yyerror(char *s);
 typedef enum { typeCon, typeId, typeOpr } nodeEnum;
 
@@ -34,5 +36,5 @@ nodeType *opr(int oper, int nops, ...);
 nodeType *id(char *id);
 nodeType *con(int value);
 void freeNode(nodeType *p);
-
+#endif
 

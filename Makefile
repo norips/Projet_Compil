@@ -2,11 +2,14 @@ CC=gcc
 CFLAGS:= -std=gnu99
 LDFLAGS:= -lfl
 PROGS = interIMP
-
+OBJS = imp.tab.o imp.yy.o environ.o AST.o 
 all: $(PROGS)
 
-AST.o : AST.c AST.h 
+%.o : %.c %.h 
 	$(CC) $(CFLAGS) -c -o $@ $<
+	
+
+
 
 imp.tab.c imp.tab.h: imp.y
 	bison -t -v --file-prefix=imp -d imp.y
@@ -14,8 +17,8 @@ imp.tab.c imp.tab.h: imp.y
 imp.yy.c: imp.l imp.tab.h
 	flex -o $@ $< 
 
-interIMP: imp.yy.c imp.tab.c imp.tab.h AST.o
-	$(CC) $(CFLAGS) -o $@ imp.yy.c imp.tab.c AST.o
+interIMP: $(OBJS) interIMP.c
+	$(CC) $(CFLAGS) -o $@ $^
 
 
 clean :

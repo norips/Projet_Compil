@@ -2,11 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "environ.h"
 #include "AST.h"
 
 #define YYDEBUG 1
 extern int yyerror(char*);
 extern int yylex();
+extern int ex(ENV *e,nodeType *p);
 
 %}
 %union {
@@ -26,7 +28,7 @@ extern int yylex();
 
 %%
 /* Un programme est une suite de déclaration (C) composé de déclaration atomique (C0)  */
-prog: C		{printf("Head -> %d\n",((nodeType *)$1)->opr.oper);}
+prog: C		    { ENV e = Envalloc(); ex(&e,$1); ecrire_env(e); }
     ;
 
 E: E Pl T		{$$ = opr(Pl,2,$1, $3);}
@@ -70,6 +72,6 @@ int yywrap() {
 }
 
 int main(int argn, char **argv) {
-    yydebug = 1;
+    yydebug = 0;
     return yyparse();
 }
