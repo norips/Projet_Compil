@@ -72,6 +72,6 @@ int yywrap() {
 }
 
 int main(int argn, char **argv) {
-    yydebug = 0;
+    yydebug = 1;
     return yyparse();
 }

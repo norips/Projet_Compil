@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS:= -std=gnu99
 LDFLAGS:= -lfl
-PROGS = interIMP
+PROGS = interIMP compIMP
 OBJS = imp.tab.o imp.yy.o environ.o AST.o 
 all: $(PROGS)
 
@@ -19,6 +19,10 @@ imp.yy.c: imp.l imp.tab.h
 
 interIMP: $(OBJS) interIMP.c
 	$(CC) $(CFLAGS) -o $@ $^
+
+compIMP: $(OBJS) compIMP.c
+	$(CC) $(CFLAGS) -o $@ $^
+    
 
 
 clean :
