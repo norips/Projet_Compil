@@ -14,8 +14,8 @@ int ex(ENV *e,nodeType *p) {
 	                    ;;char buf2[20]; snprintf(buf2,20,"CT%d",++currentC);
 	                    print(current++,"Afc", buf, NULL, buf2);
 	                    break;
-	    case typeId:	;;char buf5[20]; snprintf(buf2,20,"VA%d",++currentV);
-	                    print(current++,"Af", p->id.id, buf2, NULL);
+	    case typeId:	;;char buf5[20]; snprintf(buf5,20,"CT%d",++currentC);
+	                    print(current++,"Af", buf5, p->id.id, NULL);
 	                    break;
 	    case typeOpr:    
 	    switch(p->opr.oper) {
@@ -29,8 +29,8 @@ int ex(ENV *e,nodeType *p) {
                         }
 	                    return 0; 
 	        case Af:    ex(e,p->opr.op[1]);
-	                    ;;char buf4[20]; snprintf(buf2,20,"CT%d",currentC);
-	                    print(current++,"Af", p->opr.op[0]->id.id, buf2,NULL );
+	                    ;;char buf4[20]; snprintf(buf4,20,"CT%d",currentC);
+	                    print(current++,"Af", p->opr.op[0]->id.id, buf4,NULL );
 	                    break;
 	                    
 	        case Se:    ex(e,p->opr.op[0]); return ex(e,p->opr.op[1]);
