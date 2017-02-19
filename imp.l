@@ -8,7 +8,7 @@
 %%
 
 
-[1-9][0-9]*  	{yylval.i = atoi(yytext); return I;}
+[0-9]+  	{yylval.i = atoi(yytext); return I;}
 :=		{return Af;}
 skip 		{return Sk;}
 ; 		{return Se;}
