@@ -20,7 +20,7 @@ do 		{return Do;}
 "+" 		{return Pl;}
 "-" 		{return Mo;}
 "*" 		{return Mu;}
-[A-Z][A-Za-z0-9]*	{yylval.id = strdup(yytext);return V;}
+[A-Za-z0-9]+	{yylval.id = strdup(yytext);return V;}
 [ \t\n]		{;} //Ignore
 
 .       {return yytext[0];}
