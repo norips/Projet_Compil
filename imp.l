@@ -10,7 +10,7 @@
 
 [1-9][0-9]*  	{yylval.i = atoi(yytext); return I;}
 :=		{return Af;}
-Skip 		{return Sk;}
+skip 		{return Sk;}
 ; 		{return Se;}
 if 		{return If;}
 then 		{return Th;}
