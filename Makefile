@@ -31,7 +31,9 @@ compIMP: $(OBJS) compIMP.c
     
 test: interIMP
 	for test in $(TEST); do \
+		cat $$test; \
 		./interIMP < $$test;\
+		echo "#################################"; \
 	done
 
 clean :
