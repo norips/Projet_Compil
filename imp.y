@@ -49,14 +49,14 @@ F: '(' E ')'		{$$ = $2;}
 C0: V Af E		{$$ = opr(Af,2,id($1), $3);}
  | Sk			{$$ = opr(Sk,2,NULL,NULL);}
  | Se			{$$ = opr(Se,2,NULL,NULL);}
- | '(' C0 ')'		{$$ = $2;}
+ | '(' C ')'		{$$ = $2;}
  | If E Th C El C0	{$$ = opr(If,3,$2,$4,$6);}
  | Wh E Do C0		{$$ = opr(Wh,2,$2,$4);}
  ;
 
 C: C Se C0		{$$ = opr(Se,2,$1,$3);}
  | C0			{$$ = $1;}
- | '(' C ')'		{$$ = $2;}
+ | '(' C0 ')'		{$$ = $2;}
  ;
 
 
@@ -73,6 +73,6 @@ int yywrap() {
 }
 
 int main(int argn, char **argv) {
-    yydebug = 1;
+    yydebug = 0;
     return yyparse();
 }
