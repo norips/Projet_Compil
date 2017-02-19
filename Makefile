@@ -6,7 +6,7 @@ OBJS = imp.tab.o imp.yy.o environ.o AST.o
 TEST = $(wildcard test/*.ip)
 
 
-.PHONY: clean
+.PHONY: clean test
 
 
 all: $(PROGS)
