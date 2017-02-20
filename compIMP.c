@@ -25,8 +25,17 @@ int ex(ENV *e,nodeType *p) {
 	                    break;
 	    case typeOpr:    
 	    switch(p->opr.oper) {
-	        case Wh:    while(ex(e,p->opr.op[0]))
-	                        ex(e,p->opr.op[1]);
+	        case Wh:    snprintf(buf,20,"JMP%d",lbJMP1 = lbJMP++);
+	                    printf("%s\t:%s\t:%s\t:%s\t:%s\n",buf,"Sk","","","");
+	                    ex(e,p->opr.op[0]);
+	                    snprintf(buf2,20,"CT%d",currentC);
+	                    snprintf(buf3,20,"JMP%d",lbJMP2 = lbJMP++);
+                        print(current++,"Jz",buf2,NULL,buf3);
+                        ex(e,p->opr.op[1]);
+                        print(current++,"Je",NULL,NULL,buf);
+                        printf("%s\t:%s\t:%s\t:%s\t:%s\n",buf3,"Sk","","","");
+                        
+	                        
 	                    return 0;  
             case If:    ex(e,p->opr.op[0]);
                         snprintf(buf,20,"CT%d",currentC);
@@ -34,7 +43,7 @@ int ex(ENV *e,nodeType *p) {
                         print(current++,"Jz",buf,NULL,buf2);
                         ex(e,p->opr.op[1]);
                         snprintf(buf3,20,"JMP%d",lbJMP2 = lbJMP++);
-                        print(current++,"Je",NULL,NULL,buf3);
+                        print(current++,"Jp",NULL,NULL,buf3);
                         printf("%s\t:%s\t:%s\t:%s\t:%s\n",buf2,"Sk","","","");
                         ex(e,p->opr.op[2]);
                         printf("%s\t:%s\t:%s\t:%s\t:%s\n",buf3,"Sk","","","");
