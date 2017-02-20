@@ -11,14 +11,17 @@ static int lbJMP=0;
 
 int ex(ENV *e,nodeType *p) {
     int lbJMP1,lbJMP2;
+    char buf[20];
+    char buf2[20];
+    char buf3[20];
 	if (!p) return 0;
 	switch(p->type) {
-	    case typeCon:   ;;char buf[20];  snprintf(buf,20,"%d",p->con.value);
-	                    ;;char buf2[20]; snprintf(buf2,20,"CT%d",++currentC);
+	    case typeCon:   snprintf(buf,20,"%d",p->con.value);
+	                    snprintf(buf2,20,"CT%d",++currentC);
 	                    print(current++,"Afc", buf, NULL, buf2);
 	                    break;
-	    case typeId:	;;char buf5[20]; snprintf(buf5,20,"CT%d",++currentC);
-	                    print(current++,"Af", buf5, p->id.id, NULL);
+	    case typeId:	snprintf(buf2,20,"CT%d",++currentC);
+	                    print(current++,"Af", buf2, p->id.id, NULL);
 	                    break;
 	    case typeOpr:    
 	    switch(p->opr.oper) {
@@ -26,19 +29,19 @@ int ex(ENV *e,nodeType *p) {
 	                        ex(e,p->opr.op[1]);
 	                    return 0;  
             case If:    ex(e,p->opr.op[0]);
-                        ;;char buf8[20]; snprintf(buf8,20,"CT%d",currentC);
-                        ;;char buf9[20]; snprintf(buf9,20,"JMP%d",lbJMP1 = lbJMP++);
-                        print(current++,"Jz",buf8,NULL,buf9);
+                        snprintf(buf,20,"CT%d",currentC);
+                        snprintf(buf2,20,"JMP%d",lbJMP1 = lbJMP++);
+                        print(current++,"Jz",buf,NULL,buf2);
                         ex(e,p->opr.op[1]);
-                        ;;char buf10[20]; snprintf(buf10,20,"JMP%d",lbJMP2 = lbJMP++);
-                        print(current++,"Je",NULL,NULL,buf10);
-                        printf("%s\t:%s\t:%s\t:%s\t:%s\n",buf9,"Sk","","","");
+                        snprintf(buf3,20,"JMP%d",lbJMP2 = lbJMP++);
+                        print(current++,"Je",NULL,NULL,buf3);
+                        printf("%s\t:%s\t:%s\t:%s\t:%s\n",buf2,"Sk","","","");
                         ex(e,p->opr.op[2]);
-                        printf("%s\t:%s\t:%s\t:%s\t:%s\n",buf10,"Sk","","","");
+                        printf("%s\t:%s\t:%s\t:%s\t:%s\n",buf3,"Sk","","","");
 	                    return 0; 
 	        case Af:    ex(e,p->opr.op[1]);
-	                    ;;char buf4[20]; snprintf(buf4,20,"CT%d",currentC);
-	                    print(current++,"Af", p->opr.op[0]->id.id, buf4,NULL );
+	                    snprintf(buf,20,"CT%d",currentC);
+	                    print(current++,"Af", p->opr.op[0]->id.id, buf,NULL );
 	                    break;
 	                    
 	        case Se:    ex(e,p->opr.op[0]); return ex(e,p->opr.op[1]);
@@ -46,9 +49,9 @@ int ex(ENV *e,nodeType *p) {
 	        case Pl:    ex(e,p->opr.op[0]);
                         int leftCurrent = currentC;
                         ex(e,p->opr.op[1]);
-                        char buf6[20]; snprintf(buf6,20,"CT%d",leftCurrent);
-                        char buf7[20]; snprintf(buf7,20,"CT%d",currentC);
-                        print(current++,"Pl",buf6,buf7,buf7);
+                        snprintf(buf,20,"CT%d",leftCurrent);
+                        snprintf(buf2,20,"CT%d",currentC);
+                        print(current++,"Pl",buf,buf2,buf2);
                         break;
 	        case Mo:    return ex(e,p->opr.op[0]) - ex(e,p->opr.op[1]);
 	        case Mu:    return ex(e,p->opr.op[0]) * ex(e,p->opr.op[1]);
