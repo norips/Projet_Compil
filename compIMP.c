@@ -35,7 +35,13 @@ int ex(ENV *e,nodeType *p) {
 	                    
 	        case Se:    ex(e,p->opr.op[0]); return ex(e,p->opr.op[1]);
 	        
-	        case Pl:    return ex(e,p->opr.op[0]) + ex(e,p->opr.op[1]);
+	        case Pl:    ex(e,p->opr.op[0]);
+                        int leftCurrent = currentC;
+                        ex(e,p->opr.op[1]);
+                        char buf6[20]; snprintf(buf6,20,"CT%d",leftCurrent);
+                        char buf7[20]; snprintf(buf7,20,"CT%d",currentC);
+                        print(current++,"Pl",buf6,buf7,buf7);
+                        break;
 	        case Mo:    return ex(e,p->opr.op[0]) - ex(e,p->opr.op[1]);
 	        case Mu:    return ex(e,p->opr.op[0]) * ex(e,p->opr.op[1]);
 	    }
