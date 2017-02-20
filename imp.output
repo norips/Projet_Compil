@@ -1,0 +1,508 @@
+State 19 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: prog $end
+
+    1 prog: C
+
+    2 E: E Pl T
+    3  | E Mo T
+    4  | T
+
+    5 T: T Mu F
+    6  | F
+
+    7 F: '(' E ')'
+    8  | I
+    9  | Mo I
+   10  | V
+
+   11 C0: V Af E
+   12   | Sk
+   13   | Se
+   14   | '(' C ')'
+   15   | If E Th C El C0
+   16   | Wh E Do C0
+
+   17 C: C Se C0
+   18  | C0
+   19  | '(' C0 ')'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 7 14 19
+')' (41) 7 14 19
+error (256)
+V (258) 10 11
+I (259) 8 9
+Af (260) 11
+Sk (261) 12
+Se (262) 13 17
+If (263) 15
+Th (264) 15
+Wh (265) 16
+Do (266) 16
+Pl (267) 2
+Mo (268) 3 9
+Mu (269) 5
+El (270) 15
+
+
+Nonterminals, with rules where they appear
+
+$accept (18)
+    on left: 0
+prog (19)
+    on left: 1, on right: 0
+E (20)
+    on left: 2 3 4, on right: 2 3 7 11 15 16
+T (21)
+    on left: 5 6, on right: 2 3 4 5
+F (22)
+    on left: 7 8 9 10, on right: 5 6
+C0 (23)
+    on left: 11 12 13 14 15 16, on right: 15 16 17 18 19
+C (24)
+    on left: 17 18 19, on right: 1 14 15 17
+
+
+state 0
+
+    0 $accept: . prog $end
+
+    V    shift, and go to state 1
+    Sk   shift, and go to state 2
+    Se   shift, and go to state 3
+    If   shift, and go to state 4
+    Wh   shift, and go to state 5
+    '('  shift, and go to state 6
+
+    prog  go to state 7
+    C0    go to state 8
+    C     go to state 9
+
+
+state 1
+
+   11 C0: V . Af E
+
+    Af  shift, and go to state 10
+
+
+state 2
+
+   12 C0: Sk .
+
+    $default  reduce using rule 12 (C0)
+
+
+state 3
+
+   13 C0: Se .
+
+    $default  reduce using rule 13 (C0)
+
+
+state 4
+
+   15 C0: If . E Th C El C0
+
+    V    shift, and go to state 11
+    I    shift, and go to state 12
+    Mo   shift, and go to state 13
+    '('  shift, and go to state 14
+
+    E  go to state 15
+    T  go to state 16
+    F  go to state 17
+
+
+state 5
+
+   16 C0: Wh . E Do C0
+
+    V    shift, and go to state 11
+    I    shift, and go to state 12
+    Mo   shift, and go to state 13
+    '('  shift, and go to state 14
+
+    E  go to state 18
+    T  go to state 16
+    F  go to state 17
+
+
+state 6
+
+   14 C0: '(' . C ')'
+   19 C: '(' . C0 ')'
+
+    V    shift, and go to state 1
+    Sk   shift, and go to state 2
+    Se   shift, and go to state 3
+    If   shift, and go to state 4
+    Wh   shift, and go to state 5
+    '('  shift, and go to state 6
+
+    C0  go to state 19
+    C   go to state 20
+
+
+state 7
+
+    0 $accept: prog . $end
+
+    $end  shift, and go to state 21
+
+
+state 8
+
+   18 C: C0 .
+
+    $default  reduce using rule 18 (C)
+
+
+state 9
+
+    1 prog: C .
+   17 C: C . Se C0
+
+    Se  shift, and go to state 22
+
+    $default  reduce using rule 1 (prog)
+
+
+state 10
+
+   11 C0: V Af . E
+
+    V    shift, and go to state 11
+    I    shift, and go to state 12
+    Mo   shift, and go to state 13
+    '('  shift, and go to state 14
+
+    E  go to state 23
+    T  go to state 16
+    F  go to state 17
+
+
+state 11
+
+   10 F: V .
+
+    $default  reduce using rule 10 (F)
+
+
+state 12
+
+    8 F: I .
+
+    $default  reduce using rule 8 (F)
+
+
+state 13
+
+    9 F: Mo . I
+
+    I  shift, and go to state 24
+
+
+state 14
+
+    7 F: '(' . E ')'
+
+    V    shift, and go to state 11
+    I    shift, and go to state 12
+    Mo   shift, and go to state 13
+    '('  shift, and go to state 14
+
+    E  go to state 25
+    T  go to state 16
+    F  go to state 17
+
+
+state 15
+
+    2 E: E . Pl T
+    3  | E . Mo T
+   15 C0: If E . Th C El C0
+
+    Th  shift, and go to state 26
+    Pl  shift, and go to state 27
+    Mo  shift, and go to state 28
+
+
+state 16
+
+    4 E: T .
+    5 T: T . Mu F
+
+    Mu  shift, and go to state 29
+
+    $default  reduce using rule 4 (E)
+
+
+state 17
+
+    6 T: F .
+
+    $default  reduce using rule 6 (T)
+
+
+state 18
+
+    2 E: E . Pl T
+    3  | E . Mo T
+   16 C0: Wh E . Do C0
+
+    Do  shift, and go to state 30
+    Pl  shift, and go to state 27
+    Mo  shift, and go to state 28
+
+
+state 19
+
+   18 C: C0 .
+   19  | '(' C0 . ')'
+
+    ')'  shift, and go to state 31
+
+    ')'       [reduce using rule 18 (C)]
+    $default  reduce using rule 18 (C)
+
+
+state 20
+
+   14 C0: '(' C . ')'
+   17 C: C . Se C0
+
+    Se   shift, and go to state 22
+    ')'  shift, and go to state 32
+
+
+state 21
+
+    0 $accept: prog $end .
+
+    $default  accept
+
+
+state 22
+
+   17 C: C Se . C0
+
+    V    shift, and go to state 1
+    Sk   shift, and go to state 2
+    Se   shift, and go to state 3
+    If   shift, and go to state 4
+    Wh   shift, and go to state 5
+    '('  shift, and go to state 33
+
+    C0  go to state 34
+
+
+state 23
+
+    2 E: E . Pl T
+    3  | E . Mo T
+   11 C0: V Af E .
+
+    Pl  shift, and go to state 27
+    Mo  shift, and go to state 28
+
+    $default  reduce using rule 11 (C0)
+
+
+state 24
+
+    9 F: Mo I .
+
+    $default  reduce using rule 9 (F)
+
+
+state 25
+
+    2 E: E . Pl T
+    3  | E . Mo T
+    7 F: '(' E . ')'
+
+    Pl   shift, and go to state 27
+    Mo   shift, and go to state 28
+    ')'  shift, and go to state 35
+
+
+state 26
+
+   15 C0: If E Th . C El C0
+
+    V    shift, and go to state 1
+    Sk   shift, and go to state 2
+    Se   shift, and go to state 3
+    If   shift, and go to state 4
+    Wh   shift, and go to state 5
+    '('  shift, and go to state 6
+
+    C0  go to state 8
+    C   go to state 36
+
+
+state 27
+
+    2 E: E Pl . T
+
+    V    shift, and go to state 11
+    I    shift, and go to state 12
+    Mo   shift, and go to state 13
+    '('  shift, and go to state 14
+
+    T  go to state 37
+    F  go to state 17
+
+
+state 28
+
+    3 E: E Mo . T
+
+    V    shift, and go to state 11
+    I    shift, and go to state 12
+    Mo   shift, and go to state 13
+    '('  shift, and go to state 14
+
+    T  go to state 38
+    F  go to state 17
+
+
+state 29
+
+    5 T: T Mu . F
+
+    V    shift, and go to state 11
+    I    shift, and go to state 12
+    Mo   shift, and go to state 13
+    '('  shift, and go to state 14
+
+    F  go to state 39
+
+
+state 30
+
+   16 C0: Wh E Do . C0
+
+    V    shift, and go to state 1
+    Sk   shift, and go to state 2
+    Se   shift, and go to state 3
+    If   shift, and go to state 4
+    Wh   shift, and go to state 5
+    '('  shift, and go to state 33
+
+    C0  go to state 40
+
+
+state 31
+
+   19 C: '(' C0 ')' .
+
+    $default  reduce using rule 19 (C)
+
+
+state 32
+
+   14 C0: '(' C ')' .
+
+    $default  reduce using rule 14 (C0)
+
+
+state 33
+
+   14 C0: '(' . C ')'
+
+    V    shift, and go to state 1
+    Sk   shift, and go to state 2
+    Se   shift, and go to state 3
+    If   shift, and go to state 4
+    Wh   shift, and go to state 5
+    '('  shift, and go to state 6
+
+    C0  go to state 8
+    C   go to state 20
+
+
+state 34
+
+   17 C: C Se C0 .
+
+    $default  reduce using rule 17 (C)
+
+
+state 35
+
+    7 F: '(' E ')' .
+
+    $default  reduce using rule 7 (F)
+
+
+state 36
+
+   15 C0: If E Th C . El C0
+   17 C: C . Se C0
+
+    Se  shift, and go to state 22
+    El  shift, and go to state 41
+
+
+state 37
+
+    2 E: E Pl T .
+    5 T: T . Mu F
+
+    Mu  shift, and go to state 29
+
+    $default  reduce using rule 2 (E)
+
+
+state 38
+
+    3 E: E Mo T .
+    5 T: T . Mu F
+
+    Mu  shift, and go to state 29
+
+    $default  reduce using rule 3 (E)
+
+
+state 39
+
+    5 T: T Mu F .
+
+    $default  reduce using rule 5 (T)
+
+
+state 40
+
+   16 C0: Wh E Do C0 .
+
+    $default  reduce using rule 16 (C0)
+
+
+state 41
+
+   15 C0: If E Th C El . C0
+
+    V    shift, and go to state 1
+    Sk   shift, and go to state 2
+    Se   shift, and go to state 3
+    If   shift, and go to state 4
+    Wh   shift, and go to state 5
+    '('  shift, and go to state 33
+
+    C0  go to state 42
+
+
+state 42
+
+   15 C0: If E Th C El C0 .
+
+    $default  reduce using rule 15 (C0)
