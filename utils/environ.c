@@ -6,7 +6,7 @@
 #include <string.h>
 #include "environ.h"
 #include "AST.h"
-#include "imp.tab.h"
+#include "../imp.tab.h"
 /*---------------------allocation memoire----------------------------*/
 char *Idalloc()
 {

@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "AST.h"
+#include "utils/AST.h"
 #include "imp.tab.h"
 %}
 

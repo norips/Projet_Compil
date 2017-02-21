@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "AST.h"
+#include "utils/AST.h"
 #include "imp.tab.h"
-#include "environ.h"
+#include "utils/environ.h"
 
 int ex(ENV *e,nodeType *p) {
 	if (!p) return 0;

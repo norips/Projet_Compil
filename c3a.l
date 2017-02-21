@@ -1,6 +1,6 @@
 %{
-#include "bilquad.h"
-#include "environ.h"
+#include "utils/bilquad.h"
+#include "utils/environ.h"
 BILQUAD list;
 char *etiq=NULL,*arg1=NULL,*arg2=NULL,*res=NULL;
 int op = 0;

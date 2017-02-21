@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS:= -std=gnu99
 LDFLAGS:= -lfl
 PROGS = interIMP compIMP compC3A
-OBJS = imp.tab.o imp.yy.o environ.o AST.o bilquad.o
+OBJS = imp.tab.o imp.yy.o utils/environ.o utils/AST.o utils/bilquad.o
 TEST = $(wildcard test/*.ip)
 
 
@@ -32,7 +32,7 @@ compIMP: $(OBJS) compIMP.c
 c3a.yy.c: c3a.l
 	flex -o $@ $< 
 	
-compC3A: c3a.yy.c bilquad.o environ.o
+compC3A: c3a.yy.c utils/bilquad.o utils/environ.o
 	$(CC) $(CFLAGS) -o $@ $^
 	
 test: interIMP
@@ -48,3 +48,4 @@ clean :
 	rm -f *.yy.c
 	rm -f $(PROGS)
 	rm -f *.output
+	rm -f utils/*.o

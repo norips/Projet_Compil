@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "environ.h"
-#include "AST.h"
+#include "utils/environ.h"
+#include "utils/AST.h"
 
 #define YYDEBUG 1
 extern int yyerror(char*);

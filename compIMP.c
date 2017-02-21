@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "AST.h"
+#include "utils/AST.h"
 #include "imp.tab.h"
-#include "environ.h"
+#include "utils/environ.h"
 static int currentV=0,currentC=0,current=0,testPl=0,leftCurrent=0,test=0,testArith=0;;
 
 void print(int etq,const char *op, const char *arg, const char *arg2, const char *des) {
