@@ -37,7 +37,7 @@ int initenv(ENV *prho,char *var)
     }
   else
     {
-      return(EXIT_SUCCESS);
+      return(EXIT_FAILURE);
     }
 }
 /* retourne (arg1 op arg2) */

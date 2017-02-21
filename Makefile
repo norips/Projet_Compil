@@ -1,8 +1,8 @@
 CC=gcc
 CFLAGS:= -std=gnu99
 LDFLAGS:= -lfl
-PROGS = interIMP compIMP
-OBJS = imp.tab.o imp.yy.o environ.o AST.o 
+PROGS = interIMP compIMP compC3A
+OBJS = imp.tab.o imp.yy.o environ.o AST.o bilquad.o
 TEST = $(wildcard test/*.ip)
 
 
@@ -28,7 +28,13 @@ interIMP: $(OBJS) interIMP.c
 
 compIMP: $(OBJS) compIMP.c
 	$(CC) $(CFLAGS) -o $@ $^
-    
+
+c3a.yy.c: c3a.l
+	flex -o $@ $< 
+	
+compC3A: c3a.yy.c bilquad.o environ.o
+	$(CC) $(CFLAGS) -o $@ $^
+	
 test: interIMP
 	for test in $(TEST); do \
 		cat $$test; \
