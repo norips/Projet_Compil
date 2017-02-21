@@ -29,10 +29,10 @@ interIMP: $(OBJS) interIMP.c
 compIMP: $(OBJS) compIMP.c
 	$(CC) $(CFLAGS) -o $@ $^
 
-c3a.yy.c: c3a.l
+compC3A.yy.c: compC3A.l
 	flex -o $@ $< 
 	
-compC3A: c3a.yy.c utils/bilquad.o utils/environ.o
+compC3A: compC3A.yy.c utils/bilquad.o utils/environ.o
 	$(CC) $(CFLAGS) -o $@ $^
 	
 test: interIMP
