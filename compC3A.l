@@ -69,11 +69,25 @@ char *cpa(char *src){
 int yywrap() {
     return -1;
 }
-void print(int n,char *ETQ, char *cmd, char *arg1, char *arg2) {
-    if(n==1) {
-        printf("%s\t%s\t%s\n", ETQ ? strcat(ETQ,":") : "",cmd ? cmd : "",arg1 ? arg1 : "");
+char *strdupn(char *s,unsigned int n) {
+    char *d = malloc (strlen (s) + 1 + n);   // Space for length plus nul
+    if (d == NULL) return NULL;          // No memory
+    strcpy (d,s);                        // Copy the characters
+    return d;                            // Return the new string
+}
+void print(int n,char *_ETQ, char *cmd, char *arg1, char *arg2) {
+    char *ETQ = NULL;
+    if(_ETQ == NULL) {
+        ETQ = malloc(1);
+        ETQ[0] = '\0';
     } else {
-        printf("%s\t%s\t%s,\t\t%s\n", ETQ ? strcat(ETQ,":") : "",cmd ? cmd : "",arg1 ? arg1 : "",arg2 ? arg2 : "");
+        ETQ = strdupn(_ETQ,1);
+        strcat(ETQ,":");
+    }
+    if(n==1) {
+        printf("%s\t%s\t%s\n", ETQ ,cmd ? cmd : "",arg1 ? arg1 : "");
+    } else {
+        printf("%s\t%s\t%s,\t\t%s\n", ETQ ,cmd ? cmd : "",arg1 ? arg1 : "",arg2 ? arg2 : "");
     }
 }
 int main(int argc,char *argv[]) {
@@ -105,6 +119,12 @@ int main(int argc,char *argv[]) {
 	    elem = elem->SUIV;
 	}
 	//Real compilation
+	printf("\t\t.pos\t0\n");
+	print(2,"INIT","irmovl","Data","%edx");
+	print(2,NULL,"irmovl","256","%eax");
+	print(2,NULL,"addl","%edx","%eax");
+	print(2,NULL,"rrmovl","%eax","%esp");
+	print(2,NULL,"rrmovl","%eax","%ebp");
 	elem = list.debut;
 	while(elem != NULL) {
 	    if(elem->OP == Afc) {
@@ -141,7 +161,9 @@ int main(int argc,char *argv[]) {
 	    }
 	    elem = elem->SUIV;
 	}
-	
+	print(1,"END","halt","","");
+	printf("\t\t.align\t8\n");
+	printf("Data\t:\n");
     ecrire_env(env);
 	
 	
