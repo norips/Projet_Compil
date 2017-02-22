@@ -92,7 +92,7 @@ void print(int n,char *_ETQ, char *cmd, char *arg1, char *arg2) {
 }
 int main(int argc,char *argv[]) {
     char buf[128];
-    int current = 0, head = 0;;
+    int current = 0;
 	yylex();
 	ecrire_bilquad(list);
 	ENV env = Envalloc();
@@ -100,20 +100,28 @@ int main(int argc,char *argv[]) {
 	//Init all variables with a memory case associated with it name
 	while(elem != NULL) {
 	    if(elem->OP == Afc) {
-	        if(initenv(&env,elem->RES) == EXIT_SUCCESS) {
-	            affect(env,elem->RES,++current);
+	        if(strcmp(elem->RES,"") != 0) {
+	            if(initenv(&env,elem->RES) == EXIT_SUCCESS) {
+	                affect(env,elem->RES,++current);
+	            }
 	        }
 	    } else if(elem->OP == Af) {
-	        if(initenv(&env,elem->ARG1) == EXIT_SUCCESS) {
-	            affect(env,elem->ARG1,++current);
+	        if(strcmp(elem->ARG1,"") != 0) {
+	            if(initenv(&env,elem->ARG1) == EXIT_SUCCESS) {
+	                affect(env,elem->ARG1,++current);
+	            }
 	        }
-	        if(initenv(&env,elem->ARG2) == EXIT_SUCCESS) {
-	            affect(env,elem->ARG2,++current);
+	        if(strcmp(elem->ARG2,"") != 0) {
+	            if(initenv(&env,elem->ARG2) == EXIT_SUCCESS) {
+	                affect(env,elem->ARG2,++current);
+	            }
 	        }
 	    }
 	    if(elem->OP == Sk) {
-	        if(initenv(&env,elem->RES) == EXIT_SUCCESS) {
-	            affect(env,elem->RES,++current);
+	        if(strcmp(elem->ARG2,"") != 0) {
+	            if(initenv(&env,elem->RES) == EXIT_SUCCESS) {
+	                affect(env,elem->RES,++current);
+	            }
 	        }
 	    }   
 	    elem = elem->SUIV;
@@ -163,7 +171,25 @@ int main(int argc,char *argv[]) {
 	}
 	print(1,"END","halt","","");
 	printf("\t\t.align\t8\n");
-	printf("Data\t:\n");
+	printf("\t\t.pos\t0x100\n");
+	printf("Data:\n");
+	printf("\t\t.long 255\n");
+	ENV tmpEnv = env;
+	char **tmpArr = malloc(sizeof(char) * 100);
+	int ind=0;
+	while(tmpEnv != NULL) {
+	    if(tmpEnv->ID != NULL && strcmp(tmpEnv->ID,"(null)") != 0 )  {
+	        tmpArr[ind++] = strdup(tmpEnv->ID);
+	    }
+	    tmpEnv = tmpEnv->SUIV;
+	}
+	for(int i = ind-1; i >= 0; i--) {
+	    printf("%s:\t.long 0\n",tmpArr[i]);
+	}
+	for(int i = 0; i < ind; i++) {
+	    free(tmpArr[i]);
+	}
+	free(tmpArr);
     ecrire_env(env);
 	
 	
