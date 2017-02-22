@@ -89,6 +89,42 @@ void print(int n,char *_ETQ, char *cmd, char *arg1, char *arg2) {
     } else {
         printf("%s\t%s\t%s,\t\t%s\n", ETQ ,cmd ? cmd : "",arg1 ? arg1 : "",arg2 ? arg2 : "");
     }
+    free(ETQ);
+}
+
+void mulFunction() {
+    printf("MUL:\tnop\n");
+    print(2,NULL,"mrmovl","4(%esp)","%eax");
+    print(2,NULL,"mrmovl","8(%esp)","%ebx");
+    print(2,NULL,"andl","%eax","%eax");
+    print(1,NULL,"je","ENDMUL",NULL); 
+    print(1,"SIGN","nop",NULL,NULL); 
+    print(1,NULL,"jg","MULPLUS",NULL);
+    print(2,NULL,"irmovl","0","%ecx");
+    print(2,NULL,"subl","%eax","%ecx");     
+    print(2,NULL,"rrmovl","%ecx","%eax"); 
+    print(2,NULL,"rmmovl","%eax","4(%esp)");  
+    print(2,NULL,"irmovl","0","%ecx"); 
+    print(2,NULL,"subl","%ebx","%ecx");
+    print(2,NULL,"rrmovl","%ecx","%ebx");     
+    print(2,NULL,"rmmovl","%ebx","8(%esp)");
+    printf("MULPLUS:\tnop\n"); 
+    print(2,NULL,"mrmovl","4(%esp)","%eax");   
+    print(2,NULL,"andl","%eax","%eax"); 
+    print(1,NULL,"je","ENDMUL",NULL);  
+    print(2,NULL,"irmovl","1","%esi"); 
+    print(2,NULL,"subl","%esi","%eax");  
+    print(2,NULL,"mrmovl","8(%esp)","%ebx");  
+    print(1,NULL,"pushl","%ebx",NULL);  
+    print(1,NULL,"pushl","%eax",NULL); 
+    print(1,NULL,"call","MULPLUS",NULL);
+    print(1,NULL,"popl","%ebx",NULL); 
+    print(1,NULL,"popl","%ebx",NULL); 
+    print(2,NULL,"mrmovl","8(%esp)","%ebx");
+    print(2,NULL,"addl","%ebx","%eax");      
+    print(1,NULL,"ret",NULL,NULL); 
+    print(2,"ENDMUL","irmovl","0","%eax");
+    print(1,NULL,"ret",NULL,NULL);                                 
 }
 int main(int argc,char *argv[]) {
     char buf[128];
@@ -129,8 +165,7 @@ int main(int argc,char *argv[]) {
 	//Real compilation
 	printf("\t\t.pos\t0\n");
 	print(2,"INIT","irmovl","Data","%edx");
-	print(2,NULL,"irmovl","256","%eax");
-	print(2,NULL,"addl","%edx","%eax");
+	print(2,NULL,"rrmovl","%edx","%eax");
 	print(2,NULL,"rrmovl","%eax","%esp");
 	print(2,NULL,"rrmovl","%eax","%ebp");
 	elem = list.debut;
@@ -164,6 +199,19 @@ int main(int argc,char *argv[]) {
             snprintf(buf,128,"%d(%%edx)",4*valch(env,elem->RES));
             print(2,NULL,"rmmovl", "%eax",buf);
 	    }
+	    else if(elem->OP == Mu ) {
+            snprintf(buf,128,"%d(%%edx)",4*valch(env,elem->ARG1));
+            print(2,elem->ETIQ,"mrmovl",buf,"%eax");
+            snprintf(buf,128,"%d(%%edx)",4*valch(env,elem->ARG2));
+            print(1,NULL,"pushl","%eax",NULL);
+            print(2,NULL,"mrmovl", buf,"%eax");
+            print(1,NULL,"pushl","%eax",NULL);
+            print(1,NULL,"call", "MUL",NULL);
+            snprintf(buf,128,"%d(%%edx)",4*valch(env,elem->RES));
+            print(1,NULL,"pushl","%ebx",NULL);
+            print(1,NULL,"pushl","%ebx",NULL);
+            print(2,NULL,"rmmovl", "%eax",buf);
+	    }
 	    else if(elem->OP == Jp) {
 	        print(1,elem->ETIQ,"jmp",elem->RES,NULL);
 	    } 
@@ -179,8 +227,9 @@ int main(int argc,char *argv[]) {
 	    elem = elem->SUIV;
 	}
 	print(1,"END","halt","","");
+	mulFunction();
 	printf("\t\t.align\t8\n");
-	printf("\t\t.pos\t0x100\n");
+	printf("\t\t.pos\t0xF00\n");
 	printf("Data:\n");
 	printf("\t\t.long 255\n");
 	ENV tmpEnv = env;
