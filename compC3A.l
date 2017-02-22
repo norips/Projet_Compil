@@ -155,6 +155,15 @@ int main(int argc,char *argv[]) {
             snprintf(buf,128,"%d(%%edx)",4*valch(env,elem->RES));
             print(2,NULL,"rmmovl", "%ebx",buf);
 	    }
+	    else if(elem->OP == Mo ) {
+            snprintf(buf,128,"%d(%%edx)",4*valch(env,elem->ARG1));
+            print(2,elem->ETIQ,"mrmovl",buf,"%eax");
+            snprintf(buf,128,"%d(%%edx)",4*valch(env,elem->ARG2));
+            print(2,NULL,"mrmovl", buf,"%ebx");
+            print(2,NULL,"subl", "%ebx","%eax");
+            snprintf(buf,128,"%d(%%edx)",4*valch(env,elem->RES));
+            print(2,NULL,"rmmovl", "%eax",buf);
+	    }
 	    else if(elem->OP == Jp) {
 	        print(1,elem->ETIQ,"jmp",elem->RES,NULL);
 	    } 
