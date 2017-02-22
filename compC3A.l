@@ -40,7 +40,7 @@ char *cpa(char *src){
                                 op = St;   
                             }              
                         }
-<ARG_1>:[A-Za-z0-9]*      {
+<ARG_1>:-?[A-Za-z0-9]*      {
                             BEGIN ARG_2;
                             free(arg1); 
                             arg1=cpa(yytext+1);
@@ -175,22 +175,21 @@ int main(int argc,char *argv[]) {
 	printf("Data:\n");
 	printf("\t\t.long 255\n");
 	ENV tmpEnv = env;
-	char **tmpArr = malloc(sizeof(char) * 100);
+	char **tmpArr = malloc(sizeof(char*) * 100);
 	int ind=0;
-	while(tmpEnv != NULL) {
-	    if(tmpEnv->ID != NULL && strcmp(tmpEnv->ID,"(null)") != 0 )  {
-	        tmpArr[ind++] = strdup(tmpEnv->ID);
+	while(env != NULL) {
+	    if(env->ID != NULL && strcmp(env->ID,"(null)") != 0 )  {
+	        tmpArr[ind++] = strdup(env->ID);
 	    }
-	    tmpEnv = tmpEnv->SUIV;
+	    env = env->SUIV;
 	}
 	for(int i = ind-1; i >= 0; i--) {
 	    printf("%s:\t.long 0\n",tmpArr[i]);
-	}
-	for(int i = 0; i < ind; i++) {
 	    free(tmpArr[i]);
 	}
-	free(tmpArr);
-    ecrire_env(env);
+	
+    free(tmpArr);
+    ecrire_env(tmpEnv);
 	
 	
 }
