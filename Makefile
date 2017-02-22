@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS:= -std=gnu99
+CFLAGS:= -std=gnu99 -Wall
 LDFLAGS:= -lfl
 PROGS = interIMP compIMP compC3A
 OBJS = imp.tab.o imp.yy.o utils/environ.o utils/AST.o utils/bilquad.o
