@@ -130,7 +130,6 @@ int main(int argc,char *argv[]) {
     char buf[128];
     int current = 0;
 	yylex();
-	ecrire_bilquad(list);
 	ENV env = Envalloc();
 	QUAD elem = list.debut;
 	//Init all variables with a memory case associated with it name
@@ -232,7 +231,6 @@ int main(int argc,char *argv[]) {
 	printf("\t\t.pos\t0xF00\n");
 	printf("Data:\n");
 	printf("\t\t.long 255\n");
-	ENV tmpEnv = env;
 	char **tmpArr = malloc(sizeof(char*) * 100);
 	int ind=0;
 	while(env != NULL) {
@@ -247,7 +245,6 @@ int main(int argc,char *argv[]) {
 	}
 	
     free(tmpArr);
-    ecrire_env(tmpEnv);
 	
 	
 }

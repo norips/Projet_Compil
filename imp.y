@@ -28,7 +28,7 @@ extern int ex(ENV *e,nodeType *p);
 
 %%
 /* Un programme est une suite de déclaration (C) composé de déclaration atomique (C0)  */
-prog: C		    { ENV e = Envalloc(); ex(&e,$1); ecrire_env(e); }
+prog: C		    { ENV e = Envalloc(); ex(&e,$1);}
     ;
 
 E: E Pl T		{$$ = opr(Pl,2,$1, $3);}

@@ -35,11 +35,10 @@ compC3A.yy.c: compC3A.l
 compC3A: compC3A.yy.c utils/bilquad.o utils/environ.o
 	$(CC) $(CFLAGS) -o $@ $^
 	
-test: interIMP
+test: compIMP compC3A
 	for test in $(TEST); do \
-		cat $$test; \
-		./interIMP < $$test;\
-		echo "#################################"; \
+		./compIMP < $$test > $$test.c3a;\
+		./compC3A < $$test.c3a > $$test.y86;\
 	done
 
 clean :
