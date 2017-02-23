@@ -11,7 +11,7 @@ char *cpa(char *src){
     return strcpy(dst,src);
 } 
 %}
-
+%option nounput noinput
 %s OPE ARG_1 ARG_2 DEST
 %%
 
@@ -64,7 +64,7 @@ char *cpa(char *src){
                             }
                             free(dst);
                         }
-
+[ \t\n]                 { ; }
 %%
 int yywrap() {
     return -1;

@@ -4,7 +4,7 @@
 #include "utils/AST.h"
 #include "imp.tab.h"
 %}
-
+%option nounput noinput
 %%
 
 

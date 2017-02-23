@@ -2,7 +2,7 @@
 #include "utils/AST.h"
 #include "imp.tab.h"
 #include "utils/environ.h"
-static int currentV=0,currentC=0,current=0,testPl=0,leftCurrent=0,test=0,testArith=0;;
+static int currentC=0,current=0;
 
 void print(int etq,const char *op, const char *arg, const char *arg2, const char *des) {
     printf("ET%d\t:%s\t:%s\t:%s\t:%s\n",etq,op,arg ? arg : "",arg2 ? arg2 : "",des ? des : "");
@@ -10,7 +10,7 @@ void print(int etq,const char *op, const char *arg, const char *arg2, const char
 static int lbJMP=0;
 
 int ex(ENV *e,nodeType *p) {
-    int lbJMP1,lbJMP2;
+    int lbJMP1,lbJMP2,leftCurrent=0;
     char buf[20];
     char buf2[20];
     char buf3[20];
@@ -20,11 +20,9 @@ int ex(ENV *e,nodeType *p) {
 	    case typeCon:   snprintf(buf,20,"%d",p->con.value);
 	                    snprintf(buf2,20,"CT%d",++currentC);
                         print(current++,"Afc", buf, NULL, buf2);
-                        test=0;
 	                    break;
 	    case typeId:	snprintf(buf,20,"CT%d",++currentC);
 	                    print(current++,"Af", buf, p->id.id, NULL);
-                        test=1;
 	                    break;
 	    case typeOpr:    
 	    switch(p->opr.oper) {

@@ -48,3 +48,5 @@ clean :
 	rm -f $(PROGS)
 	rm -f *.output
 	rm -f utils/*.o
+	rm -f test/*.c3a
+	rm -f test/*.y86
