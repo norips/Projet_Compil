@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS:= -std=gnu99 -Wall
 LDFLAGS:= -lfl
-PROGS = interIMP compIMP compC3A
+PROGS = interIMP compIMP compC3A iimp
 OBJS = imp.tab.o imp.yy.o utils/environ.o utils/AST.o utils/bilquad.o
 TEST = $(wildcard test/*.ip)
 
@@ -17,10 +17,10 @@ all: $(PROGS)
 
 
 
-imp.tab.c imp.tab.h: imp.y
-	bison -t -v --file-prefix=imp -d imp.y
+imp.tab.c imp.tab.h: iimp.y
+	bison -t -v --file-prefix=imp -d iimp.y
 
-imp.yy.c: imp.l imp.tab.h
+imp.yy.c: iimp.l imp.tab.h
 	flex -o $@ $< 
 
 interIMP: $(OBJS) interIMP.c
@@ -35,6 +35,8 @@ compC3A.yy.c: compC3A.l
 compC3A: compC3A.yy.c utils/bilquad.o utils/environ.o
 	$(CC) $(CFLAGS) -o $@ $^
 	
+iimp: compC3A compIMP iimp.c
+	gcc -o $@ iimp.c
 test: compIMP compC3A
 	for test in $(TEST); do \
 		./compIMP < $$test > $$test.c3a;\
