@@ -243,6 +243,7 @@ int main(int argc,char *argv[]) {
 	    printf("%s:\t.long 0\n",tmpArr[i]);
 	    free(tmpArr[i]);
 	}
+	printf("\n");
 	
     free(tmpArr);
 	
