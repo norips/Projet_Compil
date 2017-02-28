@@ -36,7 +36,8 @@ compC3A: compC3A.yy.c utils/bilquad.o utils/environ.o
 	$(CC) $(CFLAGS) -o $@ $^
 	
 iimp: compC3A compIMP iimp.c
-	gcc -o $@ iimp.c
+	gcc $(CFLAGS) -o $@ iimp.c
+
 test: compIMP compC3A
 	for test in $(TEST); do \
 		./compIMP < $$test > $$test.c3a;\
