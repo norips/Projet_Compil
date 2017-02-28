@@ -222,10 +222,11 @@ int main(int argc,char *argv[]) {
 	    } 
 	    else if(elem->OP == Sk) {
 	        print(1,elem->ETIQ,"nop",NULL,NULL);
-	    }
+	    }else if(elem->OP == St) {
+	        print(1,elem->ETIQ,"halt",NULL,NULL);
+	    } 
 	    elem = elem->SUIV;
 	}
-	print(1,"END","halt","","");
 	mulFunction();
 	printf("\t\t.align\t8\n");
 	printf("\t\t.pos\t0xF00\n");
