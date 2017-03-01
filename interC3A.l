@@ -65,11 +65,10 @@ char *cpa(char *src){
                             }
                             free(dst);
                         }
-
+[ \t\n]                 ;
 %%
 int main(int argc, char *argv[]) {
     yylex();
-    ecrire_bilquad(list);
     ENV env = Envalloc();
     QUAD elem = list.debut;
     while (elem != NULL) {
