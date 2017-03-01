@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS:= -std=gnu99 -Wall
 LDFLAGS:= -lfl
-PROGS = interIMP compIMP compC3A iimp
+PROGS = interIMP interC3A compIMP compC3A iimp
 OBJS = imp.tab.o imp.yy.o utils/environ.o utils/AST.o utils/bilquad.o
 TEST = $(wildcard test/*.ip)
 
@@ -26,6 +26,9 @@ imp.yy.c: iimp.l imp.tab.h
 interIMP: $(OBJS) interIMP.c
 	$(CC) $(CFLAGS) -o $@ $^
 
+interC3A.yy.c: interC3A.l
+	flex -o $@ $< 
+
 compIMP: $(OBJS) compIMP.c
 	$(CC) $(CFLAGS) -o $@ $^
 
@@ -33,8 +36,11 @@ compC3A.yy.c: compC3A.l
 	flex -o $@ $< 
 	
 compC3A: compC3A.yy.c utils/bilquad.o utils/environ.o
-	$(CC) $(CFLAGS) -o $@ $^
-	
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+interC3A: interC3A.yy.c utils/bilquad.o utils/environ.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
 iimp: compC3A compIMP iimp.c
 	gcc $(CFLAGS) -o $@ iimp.c
 
