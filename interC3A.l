@@ -73,8 +73,6 @@ int main(int argc, char *argv[]) {
     ENV env = Envalloc();
     QUAD elem = list.debut;
     while (elem != NULL) {
-        fprintf(stderr,"%s\n",elem->ETIQ);
-        ecrire_env(env);
         /***Afc***/
         if (elem->OP == Afc) {
             initenv(&env, elem->RES);
@@ -86,9 +84,7 @@ int main(int argc, char *argv[]) {
             initenv(&env, elem->RES);
             initenv(&env, elem->ARG1);
             initenv(&env, elem->ARG2);
-            fprintf(stderr,"OP = %d",elem->OP);
             int res = eval(elem->OP, valch(env, elem->ARG1), valch(env, elem->ARG2));
-            fprintf(stderr,"%s = %d",elem->RES,res);
             affect(env, elem->RES, res);
             elem = elem->SUIV;
         }            
@@ -111,7 +107,6 @@ int main(int argc, char *argv[]) {
         else if (elem->OP == Jz) {
             QUAD listStart = list.debut;
             char *dest = elem->RES;
-            fprintf(stderr,"ARG1:%s = %d\n",elem->ARG1,valch(env, elem->ARG1));
             if(valch(env, elem->ARG1) == 0){
                 while (strcmp(listStart->ETIQ,dest) != 0){
                     listStart = listStart->SUIV;
