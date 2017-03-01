@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS:= -std=gnu99 -Wall
 LDFLAGS:= -lfl
 PROGS = interIMP interC3A compIMP compC3A iimp
-OBJS = imp.tab.o imp.yy.o utils/environ.o utils/AST.o utils/bilquad.o
+OBJS = imp.tab.o imp.yy.o utils/environ.o utils/environ_c3a.o utils/AST.o utils/bilquad.o
 TEST = $(wildcard test/*.ip)
 
 
@@ -23,13 +23,13 @@ imp.tab.c imp.tab.h: iimp.y
 imp.yy.c: iimp.l imp.tab.h
 	flex -o $@ $< 
 
-interIMP: $(OBJS) interIMP.c
+interIMP: utils/AST.o utils/bilquad.o imp.tab.o imp.yy.o utils/environ.o interIMP.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 interC3A.yy.c: interC3A.l
 	flex -o $@ $< 
 
-compIMP: $(OBJS) compIMP.c
+compIMP: utils/AST.o utils/bilquad.o imp.tab.o imp.yy.o utils/environ.o  compIMP.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 compC3A.yy.c: compC3A.l
@@ -38,7 +38,7 @@ compC3A.yy.c: compC3A.l
 compC3A: compC3A.yy.c utils/bilquad.o utils/environ.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-interC3A: interC3A.yy.c utils/bilquad.o utils/environ.o
+interC3A: interC3A.yy.c utils/bilquad.o utils/environ_c3a.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 iimp: compC3A compIMP iimp.c
