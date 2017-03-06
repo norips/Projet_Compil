@@ -1,4 +1,37 @@
 %{
+/* Raphael Druon, Amelie Domenger */
+
+/* 1/ Interpreteur du langage IMP */
+/* Fichier:  interIMP.c
+ Le fichier interIMP.c utilise:
+    -AST.h
+    -bilquad.h
+    -environ.h
+    -imp.l
+    -imp.tab.h                    */
+
+/* 2/ Interpreteur du langage C3A */
+/* Fichier:  interC3A.l
+   Le fichier interC3A.l utilise:
+    -bilquad.h
+    -environ_c3a.h                */
+
+/* 3/ Traducteur de IMP vers C3A  */
+/* Fichier:  compIMP.c
+ Le fichier compIMP.c utilise:
+    -AST.h
+    -bilquad.h
+    -environ.h
+    -imp.l    
+    -imp.tab.h                    */
+
+/* 4/ Traducteur de C3A vers Y86  */
+/* Fichier:  compC3A.l
+ Le fichier interC3A.l utilise:
+    -bilquad.h
+    -environ.h                    */
+    
+    
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
