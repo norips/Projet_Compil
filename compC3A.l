@@ -129,14 +129,30 @@ int main(int argc,char *argv[]) {
 	                affect(env,elem->ARG2,++current);
 	            }
 	        }
-	    }
-	    if(elem->OP == Sk) {
+	    } else if(elem->OP == Sk) {
 	        if(strcmp(elem->ARG2,"") != 0) {
 	            if(initenv(&env,elem->RES) == EXIT_SUCCESS) {
 	                affect(env,elem->RES,++current);
 	            }
 	        }
-	    }   
+	    } else if(elem->OP == Pl || elem->OP == Mu) {
+	        if(strcmp(elem->ARG1,"") != 0) {
+	            if(initenv(&env,elem->ARG1) == EXIT_SUCCESS) {
+	                affect(env,elem->ARG1,++current);
+	            }
+	        }
+	        if(strcmp(elem->ARG2,"") != 0) {
+	            if(initenv(&env,elem->ARG2) == EXIT_SUCCESS) {
+	                affect(env,elem->ARG2,++current);
+	            }
+	        }
+	        if(strcmp(elem->RES,"") != 0) {
+	            if(initenv(&env,elem->RES) == EXIT_SUCCESS) {
+	                affect(env,elem->ARG2,++current);
+	            }
+	        }
+	    
+	    }
 	    elem = elem->SUIV;
 	}
 	//Real compilation
