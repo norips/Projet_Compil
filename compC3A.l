@@ -96,7 +96,15 @@ void mulFunction() {
     printf("MUL:\tnop\n");
     print(2,NULL,"mrmovl","4(%esp)","%eax");
     print(2,NULL,"mrmovl","8(%esp)","%ebx");
-    print(2,NULL,"andl","%eax","%eax");
+    print(2,NULL,"rrmovl","%eax","%ecx");  
+    print(2,NULL,"subl","%ebx","%ecx");  
+    print(1,NULL,"jl","NEXT",NULL); 
+    print(2,NULL,"rmmovl","%ebx","4(%esp)"); 
+    print(2,NULL,"rmmovl","%eax","8(%esp)"); 
+    print(2,NULL,"rrmovl","%eax","%ecx");     
+    print(2,NULL,"rrmovl","%ebx","%eax");     
+    print(2,NULL,"rrmovl","%ecx","%ebx");     
+    print(2,"NEXT","andl","%eax","%eax");
     print(1,NULL,"je","ENDMUL",NULL); 
     print(1,"SIGN","nop",NULL,NULL); 
     print(1,NULL,"jg","MULPLUS",NULL);
@@ -171,7 +179,7 @@ int main(int argc,char *argv[]) {
 	        }
 	        if(strcmp(elem->RES,"") != 0) {
 	            if(initenv(&env,elem->RES) == EXIT_SUCCESS) {
-	                affect(env,elem->ARG2,++current);
+	                affect(env,elem->RES,++current);
 	            }
 	        }
 	    
