@@ -166,7 +166,7 @@ int main(int argc,char *argv[]) {
 	                affect(env,elem->RES,++current);
 	            }
 	        }
-	    } else if(elem->OP == Pl || elem->OP == Mu) {
+	    } else if(elem->OP == Pl || elem->OP == Mu || elem->OP == Mo) {
 	        if(strcmp(elem->ARG1,"") != 0) {
 	            if(initenv(&env,elem->ARG1) == EXIT_SUCCESS) {
 	                affect(env,elem->ARG1,++current);
